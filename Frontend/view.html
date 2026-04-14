@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Result</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      background: #f2f6f7;
+      font-family: Arial;
+      margin: 0;
+    }
+
+    /* LOADER */
+    .loader {
+      text-align: center;
+      margin-top: 120px;
+      color: #0f6666;
+    }
+
+    .spinner {
+      border: 5px solid #eee;
+      border-top: 5px solid #0f6666;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* RESULT BOX */
+    .result-box {
+      width: 400px;
+      margin: 70px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* WATERMARK */
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.08;
+      width: 200px;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .header img {
+      width: 60px;
+    }
+
+    .header h2 {
+      margin: 5px 0;
+      color: #0f6666;
+      font-size: 20px;
+    }
+
+    .success {
+      color: #0a8f08;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .info {
+      font-size: 16px;
+      color: #000;
+      margin: 8px 0;
+      font-weight: 500;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #00a000;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0f6666;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #0c5555;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      font-size: 13px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div id="data" class="loader">
+  <div class="spinner"></div>
+  <p>Loading result... Please wait</p>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const roll = params.get("roll");
+
+fetch(`http://localhost:5000/result/${roll}`)
+.then(res => res.json())
+.then(data => {
+
+  if(data.success){
+    const r = data.result;
+
+    document.getElementById("data").innerHTML = `
+      <div class="result-box">
+
+        <!-- Watermark -->
+        <img src="logo.png" class="watermark">
+
+        <div class="content">
+
+          <div class="header">
+            <img src="logo.png">
+            <h2>YBN UNIVERSITY</h2>
+          </div>
+
+          <div class="success">✔ Result Found</div>
+
+          <div class="info"><b>Name:</b> ${r.name || "Simran Singh"}</div>
+          <div class="info"><b>Roll Number:</b> ${r.roll}</div>
+
+          <div class="status">PASSED ✔</div>
+
+          <button onclick="window.open('${r.pdf}')">View Result</button>
+
+          <a href="${r.pdf}" download>
+            <button>Download Result</button>
+          </a>
+
+          <div class="footer">
+            © YBN University
+          </div>
+
+        </div>
+      </div>
+    `;
+  } else {
+    document.getElementById("data").innerHTML = `
+      <div class="result-box" style="text-align:center;">
+        <h2 style="color:red;">❌ Result Not Found</h2>
+        <div class="footer">© YBN University</div>
+      </div>
+    `;
+  }
+
+})
+.catch(() => {
+  document.getElementById("data").innerHTML = `
+    <div class="result-box" style="text-align:center;">
+      <h2 style="color:red;">Server Error</h2>
+      <div class="footer">© YBN University</div>
+    </div>
+  `;
+});
+</script>
+
+</body>
+</html>
