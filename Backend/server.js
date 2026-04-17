@@ -52,7 +52,7 @@ app.post("/upload", upload.single("pdf"), async (req, res) => {
       year: req.body.year,
       month: req.body.month,
       sem: req.body.sem,
-      pdf: `http://localhost:5000/uploads/${req.file.filename}`
+      pdf: `https://result-portal-backend-kkyl.onrender.com/uploads/${req.file.filename}`
     });
 
     await result.save();
