@@ -13,7 +13,7 @@ app.use(express.json());
 cloudinary.config({
   cloud_name: "dib8rvtcu",
   api_key: "814744121851219",
-  api_secret: "yU43jKdo932bjac5gvMlMJMkfPA"  // ← paste your FULL secret here
+  api_secret: "yU43jKdo932bjac5gvMlMJMkfPA"  // 👈 paste your full secret here
 });
 
 // CLOUDINARY STORAGE
@@ -22,7 +22,8 @@ const storage = new CloudinaryStorage({
   params: {
     folder: "results",
     resource_type: "raw",
-    format: "pdf"
+    format: "pdf",
+    type: "upload"  // 👈 this makes PDF public
   }
 });
 
