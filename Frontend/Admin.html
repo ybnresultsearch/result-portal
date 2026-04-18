@@ -45,7 +45,7 @@ async function upload(){
   form.append("sem", sem.value);
   form.append("pdf", pdf.files[0]);
 
-  await fetch("http://localhost:5000/upload", {
+  await fetch("https://result-portal-backend-kkyl.onrender.com/upload", {
     method: "POST",
     body: form
   });

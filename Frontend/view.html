@@ -136,7 +136,7 @@
 const params = new URLSearchParams(window.location.search);
 const roll = params.get("roll");
 
-fetch(`http://localhost:5000/result/${roll}`)
+fetch(`https://result-portal-backend-kkyl.onrender.com/result/${roll}`)
 .then(res => res.json())
 .then(data => {
 
