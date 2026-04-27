@@ -11,7 +11,7 @@
 <div id="panel" style="display:none;">
   <h3>Upload Result</h3>
   <input id="roll" placeholder="Roll">
-  <input id="name" placeholder="Student Name">
+  <input id="studentName" placeholder="Student Name">
   <input id="course" placeholder="Course">
   <input id="year" placeholder="Year">
   <input id="month" placeholder="Month">
@@ -30,7 +30,7 @@ function login(){
 async function upload(){
   const form = new FormData();
   form.append("roll", roll.value);
-  form.append("name", name.value);
+  form.append("name", document.getElementById("studentName").value);
   form.append("course", course.value);
   form.append("year", year.value);
   form.append("month", month.value);
