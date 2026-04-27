@@ -4,28 +4,21 @@
   <title>Admin Panel</title>
 </head>
 <body>
-
 <h2>Admin Login</h2>
-
 <input id="u" placeholder="Username">
 <input id="p" type="password" placeholder="Password">
 <button onclick="login()">Login</button>
-
 <div id="panel" style="display:none;">
   <h3>Upload Result</h3>
-
   <input id="roll" placeholder="Roll">
-<input id="name" placeholder="Student Name">
+  <input id="name" placeholder="Student Name">
   <input id="course" placeholder="Course">
   <input id="year" placeholder="Year">
   <input id="month" placeholder="Month">
   <input id="sem" placeholder="Semester">
-
   <input type="file" id="pdf">
-
   <button onclick="upload()">Upload</button>
 </div>
-
 <script>
 function login(){
   if(u.value==="admin" && p.value==="1234"){
@@ -34,25 +27,21 @@ function login(){
     alert("Wrong login");
   }
 }
-
 async function upload(){
   const form = new FormData();
-
   form.append("roll", roll.value);
+  form.append("name", name.value);
   form.append("course", course.value);
   form.append("year", year.value);
   form.append("month", month.value);
   form.append("sem", sem.value);
   form.append("pdf", pdf.files[0]);
-
   await fetch("https://result-portal-backend-kkyl.onrender.com/upload", {
     method: "POST",
     body: form
   });
-
   alert("Result Uploaded ✅");
 }
 </script>
-
 </body>
 </html>
